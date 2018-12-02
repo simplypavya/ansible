@@ -1,0 +1,315 @@
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/ansible/module/module_file state=touch'
+ubuntuacs | FAILED! => {
+    "changed": false,
+    "msg": "Error, could not touch target: [Errno 2] No such file or directory: '/ansible/module/module_file'",
+    "path": "/ansible/module/module_file",
+    "state": "absent"
+}
+ubuntu1 | FAILED! => {
+    "changed": false,
+    "msg": "Error, could not touch target: [Errno 2] No such file or directory: '/ansible/module/module_file'",
+    "path": "/ansible/module/module_file",
+    "state": "absent"
+}
+centos1 | FAILED! => {
+    "changed": false,
+    "msg": "Error, could not touch target: [Errno 2] No such file or directory: '/ansible/module/module_file'",
+    "path": "/ansible/module/module_file",
+    "state": "absent"
+}
+vagrant@ubuntuacs:~/ansible/module$ cd /ansible
+-bash: cd: /ansible: No such file or directory
+vagrant@ubuntuacs:~/ansible/module$ pwd
+/home/vagrant/ansible/module
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=~/ansible/module/module_file state=touch'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "dest": "/home/vagrant/ansible/module/module_file",
+    "gid": 1000,
+    "group": "vagrant",
+    "mode": "0775",
+    "owner": "vagrant",
+    "size": 4096,
+    "state": "directory",
+    "uid": 1000
+}
+ubuntu1 | FAILED! => {
+    "changed": false,
+    "msg": "Error, could not touch target: [Errno 2] No such file or directory: '/root/ansible/module/module_file'",
+    "path": "/root/ansible/module/module_file",
+    "state": "absent"
+}
+centos1 | FAILED! => {
+    "changed": false,
+    "msg": "Error, could not touch target: [Errno 2] No such file or directory: '/root/ansible/module/module_file'",
+    "path": "/root/ansible/module/module_file",
+    "state": "absent"
+}
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp state=touch'
+ubuntuacs | FAILED! => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "msg": "Error while updating modification or access time: [Errno 1] Operation not permitted: '/tmp'",
+    "owner": "root",
+    "path": "/tmp",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "secontext": "system_u:object_r:tmp_t:s0",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ vi hosts.yml
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m ping -o
+ubuntuacs | SUCCESS => {"changed": false, "ping": "pong"}
+centos1 | SUCCESS => {"changed": false, "ping": "pong"}
+ubuntu1 | SUCCESS => {"changed": false, "ping": "pong"}
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp state=touch'
+ubuntuacs | FAILED! => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "msg": "Error while updating modification or access time: [Errno 1] Operation not permitted: '/tmp'",
+    "owner": "root",
+    "path": "/tmp",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "secontext": "system_u:object_r:tmp_t:s0",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ vi hosts.yml
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp state=touch'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp",
+    "gid": 0,
+    "group": "root",
+    "mode": "01777",
+    "owner": "root",
+    "secontext": "system_u:object_r:tmp_t:s0",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ cd /tmp/test
+-bash: cd: /tmp/test: No such file or directory
+vagrant@ubuntuacs:~/ansible/module$ ls -l /tmp/tet
+ls: cannot access /tmp/tet: No such file or directory
+vagrant@ubuntuacs:~/ansible/module$ ls -l /tmp/test
+ls: cannot access /tmp/test: No such file or directory
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp/thepr state=touch'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "dest": "/tmp/thepr",
+    "gid": 0,
+    "group": "root",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp/thepr",
+    "gid": 0,
+    "group": "root",
+    "mode": "0644",
+    "owner": "root",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp/thepr",
+    "gid": 0,
+    "group": "root",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp/thepr state=file mode=600'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ ls -l /tmp/thepr
+-rw------- 1 root root 0 Nov 25 13:16 /tmp/thepr
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp/thepr state=file mode=600'
+ubuntuacs | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+centos1 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+ubuntu1 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp/thepr state=file mode=600'
+vagrant@ubuntuacs:~/ansible/module$ chmod 644 /tmp/thepr
+chmod: changing permissions of ‘/tmp/thepr’: Operation not permitted
+vagrant@ubuntuacs:~/ansible/module$ sudo chmod 644 /tmp/thepr
+vagrant@ubuntuacs:~/ansible/module$ ls -l /tmp/thepr
+-rw-r--r-- 1 root root 0 Nov 25 13:16 /tmp/thepr
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m file -a 'path=/tmp/thepr state=file mode=600'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+ubuntu1 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+centos1 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "path": "/tmp/thepr",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$

@@ -1,0 +1,13 @@
+---
+# Every YAML File should start with three dashes
+- key1:
+  - item1
+  - item2
+  - item3
+
+- key2:
+  - item4
+  - item5
+  - item6
+# Every YAML File should end with three dots
+... 

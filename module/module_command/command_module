@@ -1,0 +1,88 @@
+vagrant@ubuntuacs:~/ansible/module$ mkdir module_command
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m command -a 'hostname'
+ubuntuacs | CHANGED | rc=0 >>
+ubuntuacs
+
+ubuntu1 | CHANGED | rc=0 >>
+ubuntu1
+
+centos1 | CHANGED | rc=0 >>
+centos1
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m command -a 'hostname' -o
+ubuntuacs | CHANGED | rc=0 | (stdout) ubuntuacs
+ubuntu1 | CHANGED | rc=0 | (stdout) ubuntu1
+centos1 | CHANGED | rc=0 | (stdout) centos1
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m command -a 'date' -o
+ubuntuacs | CHANGED | rc=0 | (stdout) Sun Nov 25 14:58:51 UTC 2018
+ubuntu1 | CHANGED | rc=0 | (stdout) Sun Nov 25 14:58:51 UTC 2018
+centos1 | CHANGED | rc=0 | (stdout) Sun Nov 25 07:09:16 UTC 2018
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'hostname'
+ubuntuacs | CHANGED | rc=0 >>
+ubuntuacs
+
+ubuntu1 | CHANGED | rc=0 >>
+ubuntu1
+
+centos1 | CHANGED | rc=0 >>
+centos1
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'hostname' -o
+ubuntuacs | CHANGED | rc=0 | (stdout) ubuntuacs
+ubuntu1 | CHANGED | rc=0 | (stdout) ubuntu1
+centos1 | CHANGED | rc=0 | (stdout) centos1
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'whoami' -o
+ubuntuacs | CHANGED | rc=0 | (stdout) root
+ubuntu1 | CHANGED | rc=0 | (stdout) root
+centos1 | CHANGED | rc=0 | (stdout) root
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'id' -o
+ubuntuacs | CHANGED | rc=0 | (stdout) uid=0(root) gid=0(root) groups=0(root)
+ubuntu1 | CHANGED | rc=0 | (stdout) uid=0(root) gid=0(root) groups=0(root)
+centos1 | CHANGED | rc=0 | (stdout) uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'touch /tmp/thepr_copy_module creates=/tmp/thepr_copy_module'
+ [WARNING]: Consider using the file module with state=touch rather than running touch.  If you need to use command because file is insufficient you can add warn=False to this command task or set
+command_warnings=False in ansible.cfg to get rid of this message.
+
+ubuntuacs | CHANGED | rc=0 >>
+
+
+ubuntu1 | CHANGED | rc=0 >>
+
+
+centos1 | CHANGED | rc=0 >>
+
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'touch /tmp/thepr_copy_module creates=/tmp/thepr_copy_module'
+ubuntuacs | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module exists
+
+ubuntu1 | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module exists
+
+centos1 | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module exists
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'rm /tmp/thepr_copy_module removes=/tmp/thepr_copy_module'
+ [WARNING]: Consider using the file module with state=absent rather than running rm.  If you need to use command because file is insufficient you can add warn=False to this command task or set
+command_warnings=False in ansible.cfg to get rid of this message.
+
+ubuntuacs | CHANGED | rc=0 >>
+
+
+ubuntu1 | CHANGED | rc=0 >>
+
+
+centos1 | CHANGED | rc=0 >>
+
+
+vagrant@ubuntuacs:~/ansible/module$ ansible all -a 'rm /tmp/thepr_copy_module removes=/tmp/thepr_copy_module'
+ubuntuacs | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module does not exist
+
+ubuntu1 | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module does not exist
+
+centos1 | SUCCESS | rc=0 >>
+skipped, since /tmp/thepr_copy_module does not exist
+

@@ -1,0 +1,32 @@
+vagrant@ubuntuacs:~/ansible/module$ ansible centos1 -m file -a 'path=/tmp/fetch.txt state=file mode=600'
+centos1 | FAILED! => {
+    "changed": false,
+    "msg": "file (/tmp/fetch.txt) is absent, cannot continue",
+    "path": "/tmp/fetch.txt",
+    "state": "absent"
+}
+vagrant@ubuntuacs:~/ansible/module$ ansible centos1 -m file -a 'path=/tmp/fetch.txt state=touch mode=600'
+centos1 | CHANGED => {
+    "changed": true,
+    "dest": "/tmp/fetch.txt",
+    "gid": 0,
+    "group": "root",
+    "mode": "0600",
+    "owner": "root",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$  ansible centos1 -m fetch -a 'src=/tmp/fetch.txt dest=/tmp/fetch.txt'
+centos1 | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/fetch.txt/centos1/tmp/fetch.txt",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "remote_checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "remote_md5sum": null
+}
+vagrant@ubuntuacs:~/ansible/module$ vi module_fetch/fetch_module
+vagrant@ubuntuacs:~/ansible/module$ ls -l /tmp/fetch.txt/centos1/tmp/fetch.txt
+-rw------- 1 vagrant vagrant 0 Nov 25 15:27 /tmp/fetch.txt/centos1/tmp/fetch.txt

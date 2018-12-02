@@ -1,0 +1,10 @@
+---
+# Every YAML File should start with three dashes
+
+
+# Every comment starts wiwth the #
+key1:  this is value1
+key2: this is a second value
+
+# Every YAML File should end with three dots
+... 

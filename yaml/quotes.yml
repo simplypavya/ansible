@@ -1,0 +1,14 @@
+---
+# Every YAML File should start with three dashes
+
+
+# Every comment starts wiwth the #
+noquotes:  this is PR
+singlequote: 'this is PR with single quote'
+doublequote: "this is PR with double quote"
+
+
+# The above key pair will treat all of these are same i.e with quotes or without quotes
+
+# Every YAML File should end with three dots
+... 

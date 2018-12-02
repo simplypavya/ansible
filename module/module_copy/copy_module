@@ -1,0 +1,89 @@
+vagrant@ubuntuacs:~/ansible/module$ touch /tmp/copy
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m ping -o
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m copy -a 'src=/tmp/copy dest=/tmp/copy'
+ubuntuacs | SUCCESS => {
+    "changed": false,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy",
+    "gid": 1000,
+    "group": "vagrant",
+    "mode": "0664",
+    "owner": "vagrant",
+    "path": "/tmp/copy",
+    "size": 0,
+    "state": "file",
+    "uid": 1000
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/home/vagrant/.ansible/tmp/ansible-tmp-1543157246.5-108688740271266/source",
+    "state": "file",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "secontext": "unconfined_u:object_r:admin_home_t:s0",
+    "size": 0,
+    "src": "/root/.ansible/tmp/ansible-tmp-1543157246.48-241021541555028/source",
+    "state": "file",
+    "uid": 0
+}
+vagrant@ubuntuacs:~/ansible/module$ ansible all -m copy -a 'remote_src=yes src=/tmp/copy dest=/tmp/copy1'
+ubuntuacs | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy1",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/tmp/copy",
+    "state": "file",
+    "uid": 0
+}
+centos1 | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy1",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "secontext": "unconfined_u:object_r:user_tmp_t:s0",
+    "size": 0,
+    "src": "/tmp/copy",
+    "state": "file",
+    "uid": 0
+}
+ubuntu1 | CHANGED => {
+    "changed": true,
+    "checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "dest": "/tmp/copy1",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "d41d8cd98f00b204e9800998ecf8427e",
+    "mode": "0644",
+    "owner": "root",
+    "size": 0,
+    "src": "/tmp/copy",
+    "state": "file",
+    "uid": 0
+}

@@ -1,0 +1,263 @@
+> COPY    (/usr/local/lib/python2.7/dist-packages/ansible/modules/files/copy.py)
+
+        The `copy' module copies a file from the local or remote machine to a location on the remote machine. Use the [fetch] module to copy files from remote locations
+        to the local box. If you need variable interpolation in copied files, use the [template] module. For Windows targets, use the [win_copy] module instead.
+
+  * note: This module has a corresponding action plugin.
+
+OPTIONS (= is mandatory):
+
+- attributes
+        Attributes the file or directory should have. To get supported flags look at the man page for `chattr' on the target system. This string should contain the
+        attributes in the same order as the one displayed by `lsattr'.
+        `=' operator is assumed as default, otherwise `+' or `-' operators need to be included in the string.
+        (Aliases: attr)[Default: (null)]
+        version_added: 2.3
+
+- backup
+        Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly.
+        [Default: no]
+        type: bool
+        version_added: 0.7
+
+- checksum
+        SHA1 checksum of the file being transferred. Used to validate that the copy of the file was successful.
+        If this is not provided, ansible will use the local calculated checksum of the src file.
+        [Default: (null)]
+        version_added: 2.5
+
+- content
+        When used instead of `src', sets the contents of a file directly to the specified value. For anything advanced or with formatting also look at the template
+        module.
+        [Default: (null)]
+        version_added: 1.1
+
+- decrypt
+        This option controls the autodecryption of source files using vault.
+        [Default: yes]
+        type: bool
+        version_added: 2.4
+
+= dest
+        Remote absolute path where the file should be copied to. If `src' is a directory, this must be a directory too. If `dest' is a nonexistent path and if either
+        `dest' ends with "/" or `src' is a directory, `dest' is created. If `src' and `dest' are files, the parent directory of `dest' isn't created: the task fails if
+        it doesn't already exist.
+
+
+- directory_mode
+        When doing a recursive copy set the mode for the directories. If this is not set we will use the system defaults. The mode is only set on directories which are
+        newly created, and will not affect those that already existed.
+        [Default: (null)]
+        version_added: 1.5
+
+- follow
+        This flag indicates that filesystem links in the destination, if they exist, should be followed.
+        [Default: no]
+        type: bool
+        version_added: 1.8
+
+- force
+        the default is `yes', which will replace the remote file when contents are different than the source. If `no', the file will only be transferred if the
+        destination does not exist.
+        (Aliases: thirsty)[Default: yes]
+        type: bool
+        version_added: 1.1
+
+- group
+        Name of the group that should own the file/directory, as would be fed to `chown'.
+        [Default: (null)]
+
+- local_follow
+        This flag indicates that filesystem links in the source tree, if they exist, should be followed.
+        [Default: yes]
+        type: bool
+        version_added: 2.4
+
+- mode
+        Mode the file or directory should be. For those used to `/usr/bin/chmod' remember that modes are actually octal numbers. You must either add a leading zero so
+        that Ansible's YAML parser knows it is an octal number (like `0644' or `01777') or quote it (like `'644'' or `'1777'') so Ansible receives a string and can do
+        its own conversion from string into number.  Giving Ansible a number without following one of these rules will end up with a decimal number which will have
+        unexpected results.  As of version 1.8, the mode may be specified as a symbolic mode (for example, `u+rwx' or `u=rw,g=r,o=r').  As of version 2.3, the mode may
+        also be the special string `preserve'.  `preserve' means that the file will be given the same permissions as the source file.
+        [Default: (null)]
+
+- owner
+        Name of the user that should own the file/directory, as would be fed to `chown'.
+        [Default: (null)]
+
+- remote_src
+        If `no', it will search for `src' at originating/master machine.
+        If `yes' it will go to the remote/target machine for the `src'. Default is `no'.
+        Currently `remote_src' does not support recursive copying.
+        `remote_src' only works with `mode=preserve' as of version 2.6.
+        [Default: no]
+        type: bool
+        version_added: 2.0
+
+- selevel
+        Level part of the SELinux file context. This is the MLS/MCS attribute, sometimes known as the `range'. `_default' feature works as for `seuser'.
+        [Default: s0]
+
+- serole
+        Role part of SELinux file context, `_default' feature works as for `seuser'.
+        [Default: (null)]
+
+- setype
+        Type part of SELinux file context, `_default' feature works as for `seuser'.
+        [Default: (null)]
+
+- seuser
+        User part of SELinux file context. Will default to system policy, if applicable. If set to `_default', it will use the `user' portion of the policy if
+        available.
+        [Default: (null)]
+
+- src
+        Local path to a file to copy to the remote server; can be absolute or relative. If path is a directory, it is copied recursively. In this case, if path ends
+        with "/", only inside contents of that directory are copied to destination. Otherwise, if it does not end with "/", the directory itself with all contents is
+        copied. This behavior is similar to Rsync.
+        [Default: (null)]
+
+- unsafe_writes
+        By default this module uses atomic operations to prevent data corruption or inconsistent reads from the target files, but sometimes systems are configured or
+        just broken in ways that prevent this. One example is docker mounted files, which cannot be updated atomically from inside the container and can only be written
+        in an unsafe manner.
+        This option allows Ansible to fall back to unsafe methods of updating files when atomic operations fail (however, it doesn't force Ansible to perform unsafe
+        writes). IMPORTANT! Unsafe writes are subject to race conditions and can lead to data corruption.
+        [Default: no]
+        type: bool
+        version_added: 2.2
+
+- validate
+        The validation command to run before copying into place. The path to the file to validate is passed in via '%s' which must be present as in the example below.
+        The command is passed securely so shell features like expansion and pipes won't work.
+        [Default: (null)]
+
+
+NOTES:
+      * The [copy] module recursively copy facility does not scale to lots (>hundreds) of files. For alternative, see [synchronize] module, which is a wrapper
+        around `rsync'.
+      * For Windows targets, use the [win_copy] module instead.
+
+AUTHOR: Ansible Core Team, Michael DeHaan
+        METADATA:
+          status:
+          - stableinterface
+          supported_by: core
+        
+
+EXAMPLES:
+- name: example copying file with owner and permissions
+  copy:
+    src: /srv/myfiles/foo.conf
+    dest: /etc/foo.conf
+    owner: foo
+    group: foo
+    mode: 0644
+
+- name: The same example as above, but using a symbolic mode equivalent to 0644
+  copy:
+    src: /srv/myfiles/foo.conf
+    dest: /etc/foo.conf
+    owner: foo
+    group: foo
+    mode: u=rw,g=r,o=r
+
+- name: Another symbolic mode example, adding some permissions and removing others
+  copy:
+    src: /srv/myfiles/foo.conf
+    dest: /etc/foo.conf
+    owner: foo
+    group: foo
+    mode: u+rw,g-wx,o-rwx
+
+- name: Copy a new "ntp.conf file into place, backing up the original if it differs from the copied version
+  copy:
+    src: /mine/ntp.conf
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
+- name: Copy a new "sudoers" file into place, after passing validation with visudo
+  copy:
+    src: /mine/sudoers
+    dest: /etc/sudoers
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Copy a "sudoers" file on the remote machine for editing
+  copy:
+    src: /etc/sudoers
+    dest: /etc/sudoers.edit
+    remote_src: yes
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Copy using the 'content' for inline data
+  copy:
+    content: '# This file was moved to /etc/other.conf'
+    dest: /etc/mine.conf'
+
+RETURN VALUES:
+
+
+dest:
+    description: destination file/path
+    returned: success
+    type: string
+    sample: /path/to/file.txt
+src:
+    description: source file used for the copy on the target machine
+    returned: changed
+    type: string
+    sample: /home/httpd/.ansible/tmp/ansible-tmp-1423796390.97-147729857856000/source
+md5sum:
+    description: md5 checksum of the file after running copy
+    returned: when supported
+    type: string
+    sample: 2a5aeecc61dc98c4d780b14b330e3282
+checksum:
+    description: sha1 checksum of the file after running copy
+    returned: success
+    type: string
+    sample: 6e642bb8dd5c2e027bf21dd923337cbb4214f827
+backup_file:
+    description: name of backup file created
+    returned: changed and if backup=yes
+    type: string
+    sample: /path/to/file.txt.2015-02-12@22:09~
+gid:
+    description: group id of the file, after execution
+    returned: success
+    type: int
+    sample: 100
+group:
+    description: group of the file, after execution
+    returned: success
+    type: string
+    sample: httpd
+owner:
+    description: owner of the file, after execution
+    returned: success
+    type: string
+    sample: httpd
+uid:
+    description: owner id of the file, after execution
+    returned: success
+    type: int
+    sample: 100
+mode:
+    description: permissions of the target, after execution
+    returned: success
+    type: string
+    sample: 0644
+size:
+    description: size of the target, after execution
+    returned: success
+    type: int
+    sample: 1220
+state:
+    description: state of the target, after execution
+    returned: success
+    type: string
+    sample: file
+
